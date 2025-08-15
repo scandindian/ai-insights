@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const NavBar = styled.nav`
     background: #222;
@@ -18,7 +19,7 @@ const NavList = styled.ul`
 
 const NavItem = styled.li``;
 
-const NavLink = styled.a`
+const NavLink = styled(Link)`
     color: #fff;
     text-decoration: none;
     font-weight: 500;
@@ -34,13 +35,13 @@ const NavigationBar: React.FC = () => (
     <NavBar>
         <NavList>
             <NavItem>
-                <NavLink href="#">Home</NavLink>
+                <NavLink to="/">Home</NavLink>
             </NavItem>
             <NavItem>
-                <NavLink href="#">Users</NavLink>
+                <NavLink to="/users">Users</NavLink>
             </NavItem>
             <NavItem>
-                <NavLink href="#">Departments</NavLink>
+                <NavLink to="/departments">Departments</NavLink>
             </NavItem>
         </NavList>
     </NavBar>
