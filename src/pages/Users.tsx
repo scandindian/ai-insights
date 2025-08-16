@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchInsights } from "../store/insightsSlice";
 import type { RootState, AppDispatch } from "../store";
 import CardList from "../components/CardList";
+import SortSelect from "../components/SortSelect";
 import type { Session } from "../types/insights";
 
 const Users: React.FC = () => {
@@ -37,16 +38,15 @@ const Users: React.FC = () => {
       : a.name.localeCompare(b.name)
   );
 
+  const sortOptions = [
+    { value: "score", label: "Score" },
+    { value: "name", label: "Name" },
+  ];
+
   return (
     <div>
       <h1>Users Leaderboard</h1>
-      <div>
-        <label>Sort by: </label>
-        <select value={sortBy} onChange={e => setSortBy(e.target.value as "score" | "name")}>
-          <option value="score">Score</option>
-          <option value="name">Name</option>
-        </select>
-      </div>
+      <SortSelect value={sortBy} options={sortOptions} onChange={val => setSortBy(val as "score" | "name")} />
       <CardList users={leaderboard} />
     </div>
   );
