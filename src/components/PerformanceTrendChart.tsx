@@ -7,12 +7,18 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
+import { departmentColors } from "../utils/colors";
+
+type ChartDataPoint = {
+  date: string;
+  [department: string]: number | string;
+};
 
 type PerformanceTrendChartProps = {
-  data: { date: string; [department: string]: number | string }[];
+  data: ChartDataPoint[];
   departments: string[];
-  colors?: string[];
   height?: number;
 };
 
@@ -22,27 +28,33 @@ const ChartBackground = {
   padding: "1rem",
 };
 
+const getDeptColor = (dept: string, deptList: string[]) => {
+  return departmentColors[deptList.indexOf(dept) % departmentColors.length];
+};
+
 const PerformanceTrendChart: React.FC<PerformanceTrendChartProps> = ({
   data,
   departments,
-  colors = [
-    "#1976d2", "#388e3c", "#fbc02d", "#d32f2f", "#7b1fa2", "#0288d1", "#c2185b"
-  ],
   height = 300,
 }) => (
   <div style={ChartBackground}>
     <ResponsiveContainer width="100%" height={height}>
       <LineChart data={data}>
         <CartesianGrid stroke="#b3c2d1" strokeDasharray="3 3" />
-        <XAxis dataKey="date" tick={{ fill: "#222" }} axisLine={{ stroke: "#b3c2d1" }} />
+        <XAxis
+          dataKey="date"
+          tick={{ fill: "#222" }}
+          axisLine={{ stroke: "#b3c2d1" }}
+        />
         <YAxis tick={{ fill: "#222" }} axisLine={{ stroke: "#b3c2d1" }} />
         <Tooltip />
-        {departments.map((dept, idx) => (
+        <Legend />
+        {departments.map((dept) => (
           <Line
             key={dept}
-            type="monotone"
+            type="linear"
             dataKey={dept}
-            stroke={colors[idx % colors.length]}
+            stroke={getDeptColor(dept, departments)}
             strokeWidth={2}
             dot={false}
             name={dept}
