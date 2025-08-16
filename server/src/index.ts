@@ -8,7 +8,6 @@ app.use(cors());
 
 const PORT = process.env.PORT || 3001;
 
-// Updated types
 type Skills = Record<string, number>;
 
 type Session = {
@@ -93,6 +92,12 @@ app.get("/api/insights", (req: Request, res: Response) => {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 5);
 
+    // List of unique users
+    const users = Array.from(new Set(sessions.map((s) => s.userName)));
+
+    // List of unique departments
+    const departments = Array.from(new Set(sessions.map((s) => s.department)));
+
     res.json({
       message: "AI Insights API",
       stats: {
@@ -102,6 +107,8 @@ app.get("/api/insights", (req: Request, res: Response) => {
         topSkills,
         recentSessions,
       },
+      users,
+      departments,
       sessions,
     });
   });
