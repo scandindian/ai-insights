@@ -1,8 +1,11 @@
 import express, { Request, Response } from "express";
 import fs from "fs";
 import path from "path";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
+
 const PORT = process.env.PORT || 3001;
 
 // Updated types
