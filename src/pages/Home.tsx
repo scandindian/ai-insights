@@ -6,6 +6,7 @@ import type { InsightsState } from "../types/insights";
 import PerformanceTrendChart from "../components/PerformanceTrendChart";
 import Card from "../components/Card";
 import styled from "styled-components";
+import { capitalizeWords } from "../utils/textUtils";
 
 const SummaryGrid = styled.div`
   display: flex;
@@ -17,13 +18,24 @@ const SummaryGrid = styled.div`
 const Tile = styled.div`
   background: #e3f2fd;
   border-radius: 10px;
-  padding: 1.5rem 2rem;
+  width: 180px;
+  height: 180px;
   min-width: 180px;
+  min-height: 180px;
+  aspect-ratio: 1 / 1;
   text-align: center;
   color: #1565c0;
   font-weight: 600;
   font-size: 1.2rem;
   box-shadow: 0 2px 8px rgba(60, 64, 67, 0.07);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TrendSection = styled.div`
+  margin-bottom: 2.5rem;
 `;
 
 const Home: React.FC = () => {
@@ -60,8 +72,10 @@ const Home: React.FC = () => {
   return (
     <div>
       <h1>Insights</h1>
-      <h2>Performance Trend</h2>
-      <PerformanceTrendChart data={trendData} />
+      <TrendSection>
+        <h2>Performance Trend</h2>
+        <PerformanceTrendChart data={trendData} />
+      </TrendSection>
 
       <SummaryGrid>
         <Tile>
@@ -76,13 +90,13 @@ const Home: React.FC = () => {
             {data.stats.passRate.toFixed(2)}%
           </div>
         </Tile>
-        <div style={{ flex: 1 }}>
-          <h3 style={{ marginBottom: "1rem", color: "#1565c0" }}>Top Skills</h3>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <h3 style={{ margin: 0, color: "#1565c0" }}>Top Skills</h3>
           {topSkills.map((skill, idx) => (
             <Card
               key={skill.skill}
               rank={idx + 1}
-              title={skill.skill}
+              title={capitalizeWords(skill.skill)}
               subtitle={`Avg Score: ${skill.avgScore.toFixed(2)}`}
             />
           ))}
