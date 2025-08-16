@@ -9,6 +9,8 @@ import styled from "styled-components";
 import { capitalizeWords } from "../utils/textUtils";
 import TrendFilterBar from "../components/TrendFilterBar";
 import type { Session } from "../types/insights";
+import Loader from "../components/Loader";
+import NoData from "../components/NoData";
 
 const SummaryGrid = styled.div`
   display: flex;
@@ -62,9 +64,17 @@ const Home: React.FC = () => {
     dispatch(fetchInsights({ department: selectedDept, startDate, endDate }));
   }, [dispatch, selectedDept, startDate, endDate]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!departments.length || !data?.stats || !data?.sessions) return null;
+  if (loading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
+  if (error) return <NoData message={`Error: ${error}`} />;
+  if (!departments.length || !data?.stats || !data?.sessions) {
+    return <NoData />;
+  }
 
   // Filtered sessions for chart
   const filteredSessions: Session[] = data?.sessions;
@@ -103,6 +113,19 @@ const Home: React.FC = () => {
 
   const topSkills = data?.stats?.topSkills ?? [];
 
+  // If no data for selected filter, show NoData and hide summary grid
+  const hasChartData =
+    trendChartData.length > 0 &&
+    chartDepartments.some(
+      dept =>
+        trendChartData.some(
+          point =>
+            point[dept] !== "" &&
+            point[dept] !== null &&
+            point[dept] !== undefined
+        )
+    );
+
   return (
     <div>
       <h1>Insights</h1>
@@ -117,37 +140,42 @@ const Home: React.FC = () => {
           setEndDate={setEndDate}
         />
         <h2>Performance Trend</h2>
-        <PerformanceTrendChart
-          data={trendChartData}
-          departments={chartDepartments}
-        />
-      </TrendSection>
-
-      <SummaryGrid>
-        <Tile>
-          <div>Total Sessions</div>
-          <div style={{ fontSize: "2rem", fontWeight: 700 }}>
-            {data?.stats.totalSessions}
-          </div>
-        </Tile>
-        <Tile>
-          <div>Pass Rate</div>
-          <div style={{ fontSize: "2rem", fontWeight: 700 }}>
-            {data?.stats.passRate.toFixed(2)}%
-          </div>
-        </Tile>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <h3 style={{ margin: 0, color: "#1565c0" }}>Top Skills</h3>
-          {topSkills.map((skill, idx) => (
-            <Card
-              key={skill.skill}
-              rank={idx + 1}
-              title={capitalizeWords(skill.skill)}
-              subtitle={`Avg Score: ${skill.avgScore.toFixed(2)}`}
+        {hasChartData ? (
+          <>
+            <PerformanceTrendChart
+              data={trendChartData}
+              departments={chartDepartments}
             />
-          ))}
-        </div>
-      </SummaryGrid>
+            <SummaryGrid>
+              <Tile>
+                <div>Total Sessions</div>
+                <div style={{ fontSize: "2rem", fontWeight: 700 }}>
+                  {data?.stats.totalSessions}
+                </div>
+              </Tile>
+              <Tile>
+                <div>Pass Rate</div>
+                <div style={{ fontSize: "2rem", fontWeight: 700 }}>
+                  {data?.stats.passRate.toFixed(2)}%
+                </div>
+              </Tile>
+              <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+                <h3 style={{ margin: 0, color: "#1565c0" }}>Top Skills</h3>
+                {topSkills.map((skill, idx) => (
+                  <Card
+                    key={skill.skill}
+                    rank={idx + 1}
+                    title={capitalizeWords(skill.skill)}
+                    subtitle={`Avg Score: ${skill.avgScore.toFixed(2)}`}
+                  />
+                ))}
+              </div>
+            </SummaryGrid>
+          </>
+        ) : (
+          <NoData message="No data available for the selected filter." />
+        )}
+      </TrendSection>
     </div>
   );
 };
