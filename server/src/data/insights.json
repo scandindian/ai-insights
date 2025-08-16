@@ -5,52 +5,452 @@
   },
   "sessions": [
     {
-      "sessionId": "550e8400-e29b-41d4-a716-446655440001",
+      "sessionId": "d306828a-1bbb-42af-a503-47b6c45b8ec3",
       "userId": "user001",
       "userName": "John Doe",
-      "department": "Sales",
-      "date": "2024-10-28",
+      "department": "HR",
+      "date": "2024-10-25",
       "overallScore": 85,
       "skills": {
-        "communication": 88,
-        "problemSolving": 82,
-        "productKnowledge": 85,
-        "customerService": 90
+        "communication": 94,
+        "problemSolving": 89,
+        "productKnowledge": 98,
+        "customerService": 59
       },
-      "completionTime": 25,
+      "completionTime": 19,
       "passed": true
     },
     {
-      "sessionId": "550e8400-e29b-41d4-a716-446655440002",
+      "sessionId": "e77ed809-5834-4397-83a6-2765342e02da",
       "userId": "user002",
       "userName": "Jane Smith",
       "department": "Support",
+      "date": "2024-10-26",
+      "overallScore": 88,
+      "skills": {
+        "communication": 88,
+        "problemSolving": 73,
+        "productKnowledge": 95,
+        "customerService": 95
+      },
+      "completionTime": 19,
+      "passed": true
+    },
+    {
+      "sessionId": "b91b8a1a-1809-4917-9029-35b118924d4d",
+      "userId": "user003",
+      "userName": "Bob Johnson",
+      "department": "Sales",
+      "date": "2024-10-26",
+      "overallScore": 62,
+      "skills": {
+        "communication": 74,
+        "problemSolving": 95,
+        "productKnowledge": 69,
+        "customerService": 60
+      },
+      "completionTime": 34,
+      "passed": false
+    },
+    {
+      "sessionId": "9d6349be-6b19-458f-9cb3-0acc4aa2e88d",
+      "userId": "user004",
+      "userName": "Alice Brown",
+      "department": "Sales",
+      "date": "2024-10-30",
+      "overallScore": 63,
+      "skills": {
+        "communication": 98,
+        "problemSolving": 69,
+        "productKnowledge": 100,
+        "customerService": 81
+      },
+      "completionTime": 21,
+      "passed": false
+    },
+    {
+      "sessionId": "9c708e9f-4055-4ecd-85a9-f9a3418601e3",
+      "userId": "user005",
+      "userName": "Michael Lee",
+      "department": "Sales",
+      "date": "2024-10-27",
+      "overallScore": 71,
+      "skills": {
+        "communication": 59,
+        "problemSolving": 65,
+        "productKnowledge": 95,
+        "customerService": 74
+      },
+      "completionTime": 19,
+      "passed": true
+    },
+    {
+      "sessionId": "a4fbe433-ca34-4934-a7ed-19f6defb5469",
+      "userId": "user006",
+      "userName": "Sophia Davis",
+      "department": "HR",
+      "date": "2024-10-29",
+      "overallScore": 69,
+      "skills": {
+        "communication": 68,
+        "problemSolving": 59,
+        "productKnowledge": 55,
+        "customerService": 85
+      },
+      "completionTime": 32,
+      "passed": false
+    },
+    {
+      "sessionId": "6011bc55-db06-410e-a281-5b5b82c5fa9b",
+      "userId": "user007",
+      "userName": "David Wilson",
+      "department": "Support",
       "date": "2024-10-28",
-      "overallScore": 92,
+      "overallScore": 63,
+      "skills": {
+        "communication": 59,
+        "problemSolving": 96,
+        "productKnowledge": 90,
+        "customerService": 98
+      },
+      "completionTime": 43,
+      "passed": false
+    },
+    {
+      "sessionId": "80cf07a4-535b-4441-948e-5457869b6904",
+      "userId": "user008",
+      "userName": "Emily Clark",
+      "department": "Sales",
+      "date": "2024-10-25",
+      "overallScore": 82,
+      "skills": {
+        "communication": 79,
+        "problemSolving": 57,
+        "productKnowledge": 73,
+        "customerService": 96
+      },
+      "completionTime": 33,
+      "passed": true
+    },
+    {
+      "sessionId": "03ef4c9f-511d-41cf-ab5c-5ec98695c0cb",
+      "userId": "user009",
+      "userName": "Chris Evans",
+      "department": "Engineering",
+      "date": "2024-10-25",
+      "overallScore": 77,
+      "skills": {
+        "communication": 71,
+        "problemSolving": 94,
+        "productKnowledge": 79,
+        "customerService": 80
+      },
+      "completionTime": 24,
+      "passed": true
+    },
+    {
+      "sessionId": "ea18a43d-eb14-442e-b32d-71521bd51547",
+      "userId": "user010",
+      "userName": "Grace Miller",
+      "department": "HR",
+      "date": "2024-10-25",
+      "overallScore": 74,
+      "skills": {
+        "communication": 73,
+        "problemSolving": 96,
+        "productKnowledge": 65,
+        "customerService": 99
+      },
+      "completionTime": 24,
+      "passed": true
+    },
+    {
+      "sessionId": "6822604e-c254-4fc7-8c2a-14302d581029",
+      "userId": "user011",
+      "userName": "Daniel White",
+      "department": "Sales",
+      "date": "2024-10-30",
+      "overallScore": 57,
+      "skills": {
+        "communication": 78,
+        "problemSolving": 70,
+        "productKnowledge": 87,
+        "customerService": 56
+      },
+      "completionTime": 27,
+      "passed": false
+    },
+    {
+      "sessionId": "f0a5ba4a-2fd2-42c2-a0da-96170b0e18c8",
+      "userId": "user012",
+      "userName": "Olivia Harris",
+      "department": "Finance",
+      "date": "2024-10-29",
+      "overallScore": 60,
+      "skills": {
+        "communication": 93,
+        "problemSolving": 94,
+        "productKnowledge": 99,
+        "customerService": 84
+      },
+      "completionTime": 41,
+      "passed": false
+    },
+    {
+      "sessionId": "c1aaed0a-cc48-4592-9c8a-4def40de7123",
+      "userId": "user013",
+      "userName": "Matthew Lewis",
+      "department": "Finance",
+      "date": "2024-10-30",
+      "overallScore": 67,
+      "skills": {
+        "communication": 91,
+        "problemSolving": 66,
+        "productKnowledge": 73,
+        "customerService": 93
+      },
+      "completionTime": 27,
+      "passed": false
+    },
+    {
+      "sessionId": "8fa48c67-18a0-4787-b2b8-f2f99569a5bb",
+      "userId": "user014",
+      "userName": "Sophia Martinez",
+      "department": "Marketing",
+      "date": "2024-10-25",
+      "overallScore": 83,
+      "skills": {
+        "communication": 80,
+        "problemSolving": 72,
+        "productKnowledge": 63,
+        "customerService": 82
+      },
+      "completionTime": 19,
+      "passed": true
+    },
+    {
+      "sessionId": "ad017654-1785-40e4-ad1b-a39c7c352285",
+      "userId": "user015",
+      "userName": "James Anderson",
+      "department": "Sales",
+      "date": "2024-10-28",
+      "overallScore": 91,
+      "skills": {
+        "communication": 91,
+        "problemSolving": 100,
+        "productKnowledge": 61,
+        "customerService": 72
+      },
+      "completionTime": 19,
+      "passed": true
+    },
+    {
+      "sessionId": "a0dee4a3-94fd-4a2a-9c94-e1b7d5fef43e",
+      "userId": "user016",
+      "userName": "Emma Thompson",
+      "department": "Finance",
+      "date": "2024-10-27",
+      "overallScore": 98,
+      "skills": {
+        "communication": 79,
+        "problemSolving": 89,
+        "productKnowledge": 61,
+        "customerService": 67
+      },
+      "completionTime": 20,
+      "passed": true
+    },
+    {
+      "sessionId": "1dedfa5d-61e7-413c-bcdd-268ec05b3131",
+      "userId": "user017",
+      "userName": "William Scott",
+      "department": "Engineering",
+      "date": "2024-10-30",
+      "overallScore": 78,
+      "skills": {
+        "communication": 90,
+        "problemSolving": 73,
+        "productKnowledge": 87,
+        "customerService": 60
+      },
+      "completionTime": 45,
+      "passed": true
+    },
+    {
+      "sessionId": "17450de8-f72e-4622-9ab7-e6bb529da860",
+      "userId": "user018",
+      "userName": "Mia Taylor",
+      "department": "Sales",
+      "date": "2024-10-27",
+      "overallScore": 63,
+      "skills": {
+        "communication": 77,
+        "problemSolving": 78,
+        "productKnowledge": 73,
+        "customerService": 99
+      },
+      "completionTime": 33,
+      "passed": false
+    },
+    {
+      "sessionId": "d9466588-e3fd-42c0-874a-a595df34a077",
+      "userId": "user019",
+      "userName": "Benjamin Walker",
+      "department": "Engineering",
+      "date": "2024-10-27",
+      "overallScore": 60,
+      "skills": {
+        "communication": 68,
+        "problemSolving": 63,
+        "productKnowledge": 78,
+        "customerService": 55
+      },
+      "completionTime": 20,
+      "passed": false
+    },
+    {
+      "sessionId": "92c053da-d4fd-45a6-b9ee-2b70911193cb",
+      "userId": "user020",
+      "userName": "Charlotte Young",
+      "department": "Marketing",
+      "date": "2024-11-01",
+      "overallScore": 74,
       "skills": {
         "communication": 95,
-        "problemSolving": 90,
-        "productKnowledge": 88,
-        "customerService": 94
+        "problemSolving": 66,
+        "productKnowledge": 65,
+        "customerService": 64
+      },
+      "completionTime": 19,
+      "passed": true
+    },
+    {
+      "sessionId": "fd37a8d7-c0fd-4c25-b609-5179f358d8f7",
+      "userId": "user021",
+      "userName": "Henry Hall",
+      "department": "Support",
+      "date": "2024-10-25",
+      "overallScore": 83,
+      "skills": {
+        "communication": 72,
+        "problemSolving": 84,
+        "productKnowledge": 97,
+        "customerService": 92
+      },
+      "completionTime": 42,
+      "passed": true
+    },
+    {
+      "sessionId": "ab0d1ec9-37ed-4611-a24a-e62015dda63c",
+      "userId": "user022",
+      "userName": "Amelia Allen",
+      "department": "Marketing",
+      "date": "2024-10-31",
+      "overallScore": 92,
+      "skills": {
+        "communication": 68,
+        "problemSolving": 75,
+        "productKnowledge": 65,
+        "customerService": 91
       },
       "completionTime": 22,
       "passed": true
     },
     {
-      "sessionId": "550e8400-e29b-41d4-a716-446655440003",
-      "userId": "user003",
-      "userName": "Bob Johnson",
-      "department": "Sales",
-      "date": "2024-10-29",
-      "overallScore": 68,
+      "sessionId": "d76753cc-b616-4fe7-87b5-319766d13111",
+      "userId": "user023",
+      "userName": "Lucas King",
+      "department": "Engineering",
+      "date": "2024-10-25",
+      "overallScore": 75,
       "skills": {
-        "communication": 70,
-        "problemSolving": 65,
-        "productKnowledge": 72,
-        "customerService": 66
+        "communication": 56,
+        "problemSolving": 68,
+        "productKnowledge": 78,
+        "customerService": 90
       },
-      "completionTime": 35,
+      "completionTime": 37,
+      "passed": true
+    },
+    {
+      "sessionId": "420de310-c5ec-4d89-9199-ab86f37967d5",
+      "userId": "user024",
+      "userName": "Isabella Wright",
+      "department": "Finance",
+      "date": "2024-10-25",
+      "overallScore": 71,
+      "skills": {
+        "communication": 74,
+        "problemSolving": 76,
+        "productKnowledge": 56,
+        "customerService": 86
+      },
+      "completionTime": 18,
+      "passed": true
+    },
+    {
+      "sessionId": "ed2710bd-4512-4fea-8c52-f34f674d7bcf",
+      "userId": "user025",
+      "userName": "Mason Hill",
+      "department": "Support",
+      "date": "2024-10-25",
+      "overallScore": 63,
+      "skills": {
+        "communication": 92,
+        "problemSolving": 63,
+        "productKnowledge": 84,
+        "customerService": 92
+      },
+      "completionTime": 26,
       "passed": false
+    },
+    {
+      "sessionId": "009f2c75-5dc5-4226-aafa-e2060e844ff4",
+      "userId": "user026",
+      "userName": "Harper Green",
+      "department": "Support",
+      "date": "2024-10-28",
+      "overallScore": 58,
+      "skills": {
+        "communication": 97,
+        "problemSolving": 69,
+        "productKnowledge": 75,
+        "customerService": 92
+      },
+      "completionTime": 22,
+      "passed": false
+    },
+    {
+      "sessionId": "60519606-5706-471f-94e1-ab3bf61eee44",
+      "userId": "user027",
+      "userName": "Ethan Adams",
+      "department": "Support",
+      "date": "2024-10-30",
+      "overallScore": 89,
+      "skills": {
+        "communication": 95,
+        "problemSolving": 92,
+        "productKnowledge": 74,
+        "customerService": 94
+      },
+      "completionTime": 37,
+      "passed": true
+    },
+    {
+      "sessionId": "acfb0044-6d37-49c8-98a8-43ade03029a0",
+      "userId": "user028",
+      "userName": "Ava Nelson",
+      "department": "Sales",
+      "date": "2024-10-30",
+      "overallScore": 91,
+      "skills": {
+        "communication": 69,
+        "problemSolving": 59,
+        "productKnowledge": 82,
+        "customerService": 76
+      },
+      "completionTime": 27,
+      "passed": true
     }
   ]
 }
