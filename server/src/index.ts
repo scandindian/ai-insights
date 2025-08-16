@@ -44,10 +44,14 @@ app.get("/api/insights", (req: Request, res: Response) => {
       sessions = sessions.filter((s) => s.department === department);
     }
     if (startDate) {
-      sessions = sessions.filter((s) => new Date(s.date) >= new Date(startDate as string));
+      sessions = sessions.filter(
+        (s) => new Date(s.date) >= new Date(startDate as string)
+      );
     }
     if (endDate) {
-      sessions = sessions.filter((s) => new Date(s.date) <= new Date(endDate as string));
+      sessions = sessions.filter(
+        (s) => new Date(s.date) <= new Date(endDate as string)
+      );
     }
 
     // Statistics
@@ -92,14 +96,6 @@ app.get("/api/insights", (req: Request, res: Response) => {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 5);
 
-    // List of unique users with userId and userName
-    const users = Array.from(
-      new Map(sessions.map((s) => [s.userId, { userId: s.userId, userName: s.userName }])).values()
-    );
-
-    // List of unique departments
-    const departments = Array.from(new Set(sessions.map((s) => s.department)));
-
     res.json({
       message: "AI Insights API",
       stats: {
@@ -109,10 +105,51 @@ app.get("/api/insights", (req: Request, res: Response) => {
         topSkills,
         recentSessions,
       },
-      users,
-      departments,
       sessions,
     });
+  });
+});
+
+app.get("/api/departments", (req: Request, res: Response) => {
+  const insightsPath = path.join(__dirname, "data", "insights.json");
+
+  fs.readFile(insightsPath, "utf-8", (err, data) => {
+    if (err) {
+      return res.status(500).json({ message: "Error reading insights data." });
+    }
+
+    const parsedData: InsightsData = JSON.parse(data);
+    const sessions = parsedData.sessions;
+
+    // List of unique departments
+    const departments = Array.from(new Set(sessions.map((s) => s.department)));
+
+    res.json(departments);
+  });
+});
+
+app.get("/api/users", (req: Request, res: Response) => {
+  const insightsPath = path.join(__dirname, "data", "insights.json");
+
+  fs.readFile(insightsPath, "utf-8", (err, data) => {
+    if (err) {
+      return res.status(500).json({ message: "Error reading insights data." });
+    }
+
+    const parsedData: InsightsData = JSON.parse(data);
+    const sessions = parsedData.sessions;
+
+    // List of unique users with userId and userName
+    const users = Array.from(
+      new Map(
+        sessions.map((s) => [
+          s.userId,
+          { userId: s.userId, userName: s.userName },
+        ])
+      ).values()
+    );
+
+    res.json(users);
   });
 });
 

@@ -1,23 +1,17 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import type { InsightsResponse, InsightsState } from '../types/insights';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import type { InsightsResponse, InsightsState } from "../types/insights";
 
-const API_BASE_URL =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3001'
-    : '';
+// Set base URL for axios
+axios.defaults.baseURL = "http://localhost:3001";
 
-export const fetchInsights = createAsyncThunk<InsightsResponse, { department?: string; startDate?: string; endDate?: string }>(
-  'insights/fetchInsights',
-  async (params) => {
-    const query = new URLSearchParams(params as Record<string, string>).toString();
-    const res = await axios.get(
-      `${API_BASE_URL}/api/insights${query ? `?${query}` : ''}`,
-      { headers: { 'Cache-Control': 'no-cache' } }
-    );
-    return res.data;
-  }
-);
+export const fetchInsights = createAsyncThunk<
+  InsightsResponse,
+  { department?: string; startDate?: string; endDate?: string }
+>("insights/fetchInsights", async (params) => {
+  const res = await axios.get("/api/insights", { params });
+  return res.data;
+});
 
 const initialState: InsightsState = {
   data: null,
@@ -26,12 +20,12 @@ const initialState: InsightsState = {
 };
 
 const insightsSlice = createSlice({
-  name: 'insights',
+  name: "insights",
   initialState,
   reducers: {},
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(fetchInsights.pending, state => {
+      .addCase(fetchInsights.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -41,7 +35,7 @@ const insightsSlice = createSlice({
       })
       .addCase(fetchInsights.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch insights';
+        state.error = action.error.message || "Failed to fetch insights";
       });
   },
 });

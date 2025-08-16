@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchInsights } from "../store/insightsSlice";
+import { fetchDepartments } from "../store/departmentsSlice";
 import type { RootState, AppDispatch } from "../store";
-import type { InsightsState } from "../types/insights";
 import PerformanceTrendChart from "../components/PerformanceTrendChart";
 import Card from "../components/Card";
 import styled from "styled-components";
 import { capitalizeWords } from "../utils/textUtils";
+import TrendFilterBar from "../components/TrendFilterBar";
+import type { Session } from "../types/insights";
 
 const SummaryGrid = styled.div`
   display: flex;
@@ -40,54 +42,98 @@ const TrendSection = styled.div`
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const departments = useSelector((state: RootState) => state.departments.list);
   const { data, loading, error } = useSelector(
-    (state: RootState) => state.insights as InsightsState
+    (state: RootState) => state.insights
   );
 
+  // Filter states for chart only
+  const [selectedDept, setSelectedDept] = useState<string>("");
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
+
+  // Load departments once
   useEffect(() => {
-    dispatch(fetchInsights({}));
+    dispatch(fetchDepartments());
   }, [dispatch]);
+
+  // Fetch insights when filter changes
+  useEffect(() => {
+    dispatch(fetchInsights({ department: selectedDept, startDate, endDate }));
+  }, [dispatch, selectedDept, startDate, endDate]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-  if (!data) return null;
+  if (!departments.length || !data?.stats || !data?.sessions) return null;
 
-  // Aggregate scores by unique date
-  const dateScores: Record<string, number[]> = {};
-  data.sessions.forEach((session) => {
-    if (!dateScores[session.date]) dateScores[session.date] = [];
-    dateScores[session.date].push(session.overallScore);
+  // Filtered sessions for chart
+  const filteredSessions: Session[] = data?.sessions;
+
+  // Build a map: { [dept]: { [date]: scores[] } }
+  const deptDateScores: Record<string, Record<string, number[]>> = {};
+  filteredSessions.forEach((session: Session) => {
+    if (!deptDateScores[session.department])
+      deptDateScores[session.department] = {};
+    if (!deptDateScores[session.department][session.date])
+      deptDateScores[session.department][session.date] = [];
+    deptDateScores[session.department][session.date].push(session.overallScore);
   });
 
-  const trendData = Object.entries(dateScores)
-    .map(([date, scores]) => ({
-      date,
-      score: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length),
-    }))
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  // Get all unique dates in filtered sessions
+  const allDates: string[] = Array.from(
+    new Set(filteredSessions.map((session: Session) => session.date))
+  ).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
-  // Prepare top skills for Card display
-  const topSkills = data.stats.topSkills;
+  // Build chart data: [{ date, [dept1]: score, [dept2]: score, ... }]
+  const chartDepartments: string[] =
+    selectedDept && departments.includes(selectedDept)
+      ? [selectedDept]
+      : departments;
+
+  const trendChartData = allDates.map((date) => {
+    const entry: { date: string; [dept: string]: number | string } = { date };
+    chartDepartments.forEach((dept) => {
+      const scores = deptDateScores[dept]?.[date] || [];
+      entry[dept] = scores.length
+        ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
+        : ""; // Use empty string instead of null
+    });
+    return entry;
+  });
+
+  const topSkills = data?.stats?.topSkills ?? [];
 
   return (
     <div>
       <h1>Insights</h1>
       <TrendSection>
+        <TrendFilterBar
+          departments={departments}
+          selectedDept={selectedDept}
+          setSelectedDept={setSelectedDept}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+        />
         <h2>Performance Trend</h2>
-        <PerformanceTrendChart data={trendData} />
+        <PerformanceTrendChart
+          data={trendChartData}
+          departments={chartDepartments}
+        />
       </TrendSection>
 
       <SummaryGrid>
         <Tile>
           <div>Total Sessions</div>
           <div style={{ fontSize: "2rem", fontWeight: 700 }}>
-            {data.stats.totalSessions}
+            {data?.stats.totalSessions}
           </div>
         </Tile>
         <Tile>
           <div>Pass Rate</div>
           <div style={{ fontSize: "2rem", fontWeight: 700 }}>
-            {data.stats.passRate.toFixed(2)}%
+            {data?.stats.passRate.toFixed(2)}%
           </div>
         </Tile>
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>

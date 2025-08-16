@@ -27,8 +27,6 @@ export interface Stats {
 export interface InsightsResponse {
   message: string;
   stats: Stats;
-  users: User[];
-  departments: Department[];
   sessions: Session[];
 }
 
