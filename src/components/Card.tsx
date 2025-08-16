@@ -29,13 +29,13 @@ const Rank = styled.span`
   margin-right: 1rem;
 `;
 
-const Name = styled.span`
+const Title = styled.span`
   flex: 1;
   font-size: 1.1rem;
   font-weight: 500;
 `;
 
-const Score = styled.span`
+const SubTitle = styled.span`
   background: #e3f2fd;
   color: #1565c0;
   border-radius: 6px;
@@ -59,24 +59,26 @@ const CardDetails = styled.div`
 `;
 
 type CardProps = {
-  name: string;
-  score: number;
+  title: string;
+  subtitle: string;
   rank: number;
   details?: React.ReactNode;
 };
 
-const Card: React.FC<CardProps> = ({ name, score, rank, details }) => {
+const Card: React.FC<CardProps> = ({ title, subtitle, rank, details }) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
     <CardContainer>
-      <CardHeader onClick={() => setExpanded((prev) => !prev)}>
+      <CardHeader onClick={() => details && setExpanded((prev) => !prev)}>
         <Rank>#{rank}</Rank>
-        <Name>{name}</Name>
-        <Score>Score: {score}</Score>
-        <ExpandIcon>
-          {expanded ? <MdExpandLess /> : <MdExpandMore />}
-        </ExpandIcon>
+        <Title>{title}</Title>
+        <SubTitle>{subtitle}</SubTitle>
+        {details && (
+          <ExpandIcon>
+            {expanded ? <MdExpandLess /> : <MdExpandMore />}
+          </ExpandIcon>
+        )}
       </CardHeader>
       {expanded && details && <CardDetails>{details}</CardDetails>}
     </CardContainer>

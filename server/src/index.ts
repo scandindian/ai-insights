@@ -92,8 +92,10 @@ app.get("/api/insights", (req: Request, res: Response) => {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 5);
 
-    // List of unique users
-    const users = Array.from(new Set(sessions.map((s) => s.userName)));
+    // List of unique users with userId and userName
+    const users = Array.from(
+      new Map(sessions.map((s) => [s.userId, { userId: s.userId, userName: s.userName }])).values()
+    );
 
     // List of unique departments
     const departments = Array.from(new Set(sessions.map((s) => s.department)));

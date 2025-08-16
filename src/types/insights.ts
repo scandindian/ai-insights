@@ -10,7 +10,10 @@ export interface Session {
   passed: boolean;
 }
 
-export type User = string;
+export type User = {
+  userId: string;
+  userName: string;
+};
 export type Department = string;
 
 export interface Stats {
