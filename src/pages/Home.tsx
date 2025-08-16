@@ -59,9 +59,29 @@ const Home: React.FC = () => {
     dispatch(fetchDepartments());
   }, [dispatch]);
 
+  // Get all unique dates in filtered sessions
+  const filteredSessions: Session[] = data?.sessions ?? [];
+  const allDates: string[] = Array.from(
+    new Set(filteredSessions.map((session: Session) => session.date))
+  ).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+
+  // Set default to 1 week from latest date
+  useEffect(() => {
+    if (allDates.length > 0 && (!startDate || !endDate)) {
+      const latestDate = allDates[allDates.length - 1];
+      const weekAgo = new Date(latestDate);
+      weekAgo.setDate(weekAgo.getDate() - 6);
+      setStartDate(weekAgo.toISOString().slice(0, 10));
+      setEndDate(latestDate);
+    }
+    // eslint-disable-next-line
+  }, [allDates]);
+
   // Fetch insights when filter changes
   useEffect(() => {
-    dispatch(fetchInsights({ department: selectedDept, startDate, endDate }));
+    if (startDate && endDate) {
+      dispatch(fetchInsights({ department: selectedDept, startDate, endDate }));
+    }
   }, [dispatch, selectedDept, startDate, endDate]);
 
   if (loading) {
@@ -77,7 +97,7 @@ const Home: React.FC = () => {
   }
 
   // Filtered sessions for chart
-  const filteredSessions: Session[] = data?.sessions;
+  // const filteredSessions: Session[] = data?.sessions;
 
   // Build a map: { [dept]: { [date]: scores[] } }
   const deptDateScores: Record<string, Record<string, number[]>> = {};
@@ -90,9 +110,7 @@ const Home: React.FC = () => {
   });
 
   // Get all unique dates in filtered sessions
-  const allDates: string[] = Array.from(
-    new Set(filteredSessions.map((session: Session) => session.date))
-  ).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+  // (already declared above)
 
   // Build chart data: [{ date, [dept1]: score, [dept2]: score, ... }]
   const chartDepartments: string[] =
