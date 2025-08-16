@@ -116,14 +116,13 @@ const Home: React.FC = () => {
   // If no data for selected filter, show NoData and hide summary grid
   const hasChartData =
     trendChartData.length > 0 &&
-    chartDepartments.some(
-      dept =>
-        trendChartData.some(
-          point =>
-            point[dept] !== "" &&
-            point[dept] !== null &&
-            point[dept] !== undefined
-        )
+    chartDepartments.some((dept) =>
+      trendChartData.some(
+        (point) =>
+          point[dept] !== "" &&
+          point[dept] !== null &&
+          point[dept] !== undefined
+      )
     );
 
   return (
@@ -138,6 +137,7 @@ const Home: React.FC = () => {
           setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}
+          allDates={allDates}
         />
         <h2>Performance Trend</h2>
         {hasChartData ? (
@@ -159,7 +159,9 @@ const Home: React.FC = () => {
                   {data?.stats.passRate.toFixed(2)}%
                 </div>
               </Tile>
-              <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+              <div
+                style={{ flex: 1, display: "flex", flexDirection: "column" }}
+              >
                 <h3 style={{ margin: 0, color: "#1565c0" }}>Top Skills</h3>
                 {topSkills.map((skill, idx) => (
                   <Card
