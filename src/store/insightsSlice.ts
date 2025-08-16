@@ -1,14 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import type { InsightsResponse, InsightsState } from '../types/insights';
 
 const API_BASE_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3001'
     : '';
 
-export const fetchInsights = createAsyncThunk(
+export const fetchInsights = createAsyncThunk<InsightsResponse, { department?: string; startDate?: string; endDate?: string }>(
   'insights/fetchInsights',
-  async (params: { department?: string; startDate?: string; endDate?: string }) => {
+  async (params) => {
     const query = new URLSearchParams(params as Record<string, string>).toString();
     const res = await axios.get(
       `${API_BASE_URL}/api/insights${query ? `?${query}` : ''}`,
@@ -18,13 +19,15 @@ export const fetchInsights = createAsyncThunk(
   }
 );
 
+const initialState: InsightsState = {
+  data: null,
+  loading: false,
+  error: null,
+};
+
 const insightsSlice = createSlice({
   name: 'insights',
-  initialState: {
-    data: null,
-    loading: false,
-    error: null as string | null,
-  },
+  initialState,
   reducers: {},
   extraReducers: builder => {
     builder
