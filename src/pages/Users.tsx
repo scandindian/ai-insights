@@ -5,6 +5,8 @@ import type { RootState, AppDispatch } from "../store";
 import SortSelect from "../components/SortSelect";
 import type { Session } from "../types/insights";
 import Card from "../components/Card";
+import Loader from "../components/Loader";
+import NoData from "../components/NoData";
 
 const Users: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,9 +19,9 @@ const Users: React.FC = () => {
     dispatch(fetchInsights({}));
   }, [dispatch]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!data) return null;
+  if (loading) return <Loader />;
+  if (error) return <NoData message={`Error: ${error}`} />;
+  if (!data) return <NoData message="No user data available." />;
 
   // Aggregate user scores and sessions for leaderboard
   const userScores: { [name: string]: Session[] } = {};
