@@ -54,8 +54,6 @@ How to fix props forwarding to DOM elements?"
 and frequent data updates. What hooks should I use?"
 ```
 
-```
-
 ## Time Saved Estimates
 
 | Task Category | Traditional Time | With AI Tools | Time Saved |
@@ -70,21 +68,7 @@ and frequent data updates. What hooks should I use?"
 
 ## AI-Generated Code That Required Manual Fixes
 
-### 1. Chart Scaling Issues
-**AI Generated:**
-```typescript
-const chartHeight = 400;
-const chartWidth = 800;
-```
-
-**Manual Fix Required:**
-```typescript
-const chartHeight = Math.max(300, containerHeight * 0.6);
-const chartWidth = Math.min(containerWidth, 1200);
-// Added responsive scaling based on container size
-```
-
-### 2. Redux Store Type Issues
+### 1. Redux Store Type Issues
 **AI Generated:**
 ```typescript
 const data = useSelector(state => state.insights.data);
@@ -96,26 +80,7 @@ const data = useSelector((state: RootState) => state.insights.data);
 // Added proper TypeScript typing for state selector
 ```
 
-### 3. API Error Handling
-**AI Generated:**
-```typescript
-.catch(error => {
-  setError(error.message);
-});
-```
-
-**Manual Fix Required:**
-```typescript
-.catch(error => {
-  const errorMessage = error.response?.data?.message || 
-                      error.message || 
-                      'An unexpected error occurred';
-  setError(errorMessage);
-});
-// Added comprehensive error message handling
-```
-
-### 4. Environment Variable Configuration
+### 2. Environment Variable Configuration
 **AI Generated:**
 ```typescript
 const BASE_URL = process.env.NODE_ENV === 'production' 
@@ -130,7 +95,7 @@ const BASE_URL = import.meta.env.PROD
 // Fixed for Vite environment variables syntax
 ```
 
-### 5. Styled Components Props
+### 3. Styled Components Props
 **AI Generated:**
 ```typescript
 const Button = styled.button<{active: boolean}>`
