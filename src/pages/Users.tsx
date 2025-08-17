@@ -59,7 +59,7 @@ const Users: React.FC = () => {
 
   return (
     <div>
-      <h1>Users Leaderboard</h1>
+      <h1>Users</h1>
       <SortSelect
         value={sortBy}
         options={sortOptions}
