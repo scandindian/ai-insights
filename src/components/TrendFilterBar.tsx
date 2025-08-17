@@ -95,9 +95,11 @@ const RangeButtonGroup = styled.div`
   }
 `;
 
-const RangeButton = styled.button<{ active?: boolean }>`
+const RangeButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== 'active',
+})<{ active?: boolean }>`
   padding: 0.4rem 1rem;
-  border-radius: 4px;
+  border-radius: 2px;
   border: 1px solid #b3c2d1;
   background: ${({ active }) => (active ? "#1976d2" : "#f5f6fa")};
   color: ${({ active }) => (active ? "#fff" : "#222")};

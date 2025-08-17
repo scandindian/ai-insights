@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { User } from "../types/insights";
+import { PROD_BASE_URL, DEV_BASE_URL } from "../utils/constants";
 
+const BASE_URL = import.meta.env.PROD ? PROD_BASE_URL : DEV_BASE_URL;
 // Set base URL for axios
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = BASE_URL;
 
 export const fetchUsers = createAsyncThunk<User[]>(
   "users/fetchUsers",
