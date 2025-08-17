@@ -129,6 +129,7 @@ AI Insights Dashboard provides data visualization and analytics for customer ser
 The application is deployed on Netlify with automatic deployments from the main branch.
 
 **Live Demo**: [https://game-ai-insights.netlify.app/](https://game-ai-insights.netlify.app/)
+Backend is hosted with [https://render.com/](https://render.com/)
 
 ## 🛠 Tech Stack
 
