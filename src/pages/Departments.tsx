@@ -47,13 +47,8 @@ const Departments: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchDepartments());
+    dispatch(fetchInsights({ department: undefined }));
   }, [dispatch]);
-
-  useEffect(() => {
-    if (selectedDepts.length > 0) {
-      dispatch(fetchInsights({ department: undefined })); // fetch all, filter client-side
-    }
-  }, [dispatch, selectedDepts]);
 
   if (loading) return <Loader />;
   if (error) return <NoData message={`Error: ${error}`} />;
@@ -61,6 +56,7 @@ const Departments: React.FC = () => {
 
   // Aggregate skills for selected departments
   const sessions = data?.sessions ?? [];
+  const avgScoresByDept = data?.stats.avgScoresByDept ?? {};
   const skillsSet = new Set<string>();
   sessions.forEach((session: Session) => {
     Object.keys(session.skills).forEach((skill) => skillsSet.add(skill));
@@ -100,7 +96,7 @@ const Departments: React.FC = () => {
               )
             }
           >
-            {dept}
+            {dept} {avgScoresByDept[dept] ? `(${avgScoresByDept[dept].toFixed(2)} %)` : ""}
           </DeptButton>
         ))}
       </DepartmentsList>
