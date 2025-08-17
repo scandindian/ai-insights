@@ -14,40 +14,46 @@ AI Insights Dashboard provides data visualization and analytics for customer ser
 ## 🚀 Setup Instructions
 
 ### Prerequisites
+
 - Node.js (v18 or higher)
 - npm or yarn package manager
 
 ### Step-by-Step Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/scandindian/ai-insights.git
    cd ai-insights
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
+
    ```bash
    cp .env.example .env
    # Edit .env with your API key for Hugging Face API
    ```
 
 4. **Start the backend server**
+
    ```bash
    # Navigate to server directory
    cd server
    npm install
    npm run dev
-   
+
    # Make sure your API server is running on the configured port
    # Default: http://localhost:3001
    ```
 
 5. **Start the development server**
+
    ```bash
    # In a new terminal, navigate back to the root directory
    cd ..
@@ -62,22 +68,26 @@ AI Insights Dashboard provides data visualization and analytics for customer ser
 ## 📜 Available Scripts
 
 ### Frontend Scripts
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Runs the app in development mode |
-| `npm run build` | Builds the app for production |
-| `npm run lint` | Runs ESLint to check code quality |
+
+| Script            | Description                          |
+| ----------------- | ------------------------------------ |
+| `npm run dev`     | Runs the app in development mode     |
+| `npm run build`   | Builds the app for production        |
+| `npm run lint`    | Runs ESLint to check code quality    |
 | `npm run preview` | Preview the production build locally |
 
 ### Backend Scripts (if applicable)
-| Script | Description |
-|--------|-------------|
+
+| Script        | Description                           |
+| ------------- | ------------------------------------- |
 | `npm run dev` | Starts the API server with hot reload |
 
 ## 🔧 Development Setup
 
 ### Running Both Frontend and Backend
+
 1. **Terminal 1 - Backend Server**:
+
    ```bash
    cd server
    npm start
@@ -109,20 +119,24 @@ AI Insights Dashboard provides data visualization and analytics for customer ser
 ## 📱 Screenshots
 
 ### Dashboard Overview
+
 ![Dashboard](./screenshots/dashboard.png)
-*Main dashboard showing performance trends and key metrics*
+_Main dashboard showing performance trends and key metrics_
 
 ### Department Comparison
+
 ![Departments](./screenshots/departments.png)
-*Department skill comparison with interactive selection*
+_Department skill comparison with interactive selection_
 
 ### User Analytics
+
 ![Users](./screenshots/users.png)
-*User leaderboard with skill comparison charts*
+_User leaderboard with skill comparison charts_
 
 ### Mobile Responsive
+
 ![Mobile](./screenshots/mobile.png)
-*Mobile-optimized layout for on-the-go access*
+_Mobile-optimized layout for on-the-go access_
 
 ## 🚀 Deployment
 
@@ -138,8 +152,3 @@ Backend is hosted with [https://render.com/](https://render.com/)
 - **Charts**: Custom SVG/Canvas components
 - **Build Tool**: Vite
 - **Deployment**: Netlify
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
