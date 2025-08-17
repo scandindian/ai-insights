@@ -4,14 +4,14 @@ import { fetchDepartments } from "../store/departmentsSlice";
 import { fetchInsights } from "../store/insightsSlice";
 import type { RootState, AppDispatch } from "../store";
 import styled from "styled-components";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import Loader from "../components/Loader";
 import NoData from "../components/NoData";
 import type { Session } from "../types/insights";
+import DepartmentSkillsBarChart from "../components/DepartmentSkillsBarChart";
 
 const Container = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   padding: 2rem;
 `;
 
@@ -19,7 +19,8 @@ const DepartmentsList = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  justify-content: flex-start;
 `;
 
 const DeptButton = styled.button<{ selected?: boolean }>`
@@ -102,23 +103,7 @@ const Departments: React.FC = () => {
       {selectedDepts.length === 0 ? (
         <NoData message="Select one or more departments to view skills comparison." />
       ) : (
-        <ResponsiveContainer width="100%" height={350}>
-          <BarChart data={chartData}>
-            <XAxis dataKey="skill" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            {selectedDepts.map((dept, idx) => (
-              <Bar
-                key={dept}
-                dataKey={dept}
-                fill={`hsl(${(idx * 60) % 360}, 70%, 80%)`}
-                name={dept}
-                barSize={30}
-              />
-            ))}
-          </BarChart>
-        </ResponsiveContainer>
+        <DepartmentSkillsBarChart chartData={chartData} selectedDepts={selectedDepts} />
       )}
     </Container>
   );
