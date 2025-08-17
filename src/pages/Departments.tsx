@@ -11,8 +11,6 @@ import DepartmentSkillsBarChart from "../components/DepartmentSkillsBarChart";
 
 const Container = styled.div`
   max-width: 100%;
-  margin: 0;
-  padding: 2rem;
 `;
 
 const DepartmentsList = styled.div`
@@ -25,7 +23,7 @@ const DepartmentsList = styled.div`
 
 const DeptButton = styled.button<{ selected?: boolean }>`
   padding: 0.6rem 1.2rem;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid #b3c2d1;
   background: ${({ selected }) => (selected ? "#1976d2" : "#e3f2fd")};
   color: ${({ selected }) => (selected ? "#fff" : "#1976d2")};
@@ -41,7 +39,9 @@ const DeptButton = styled.button<{ selected?: boolean }>`
 const Departments: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const departments = useSelector((state: RootState) => state.departments.list);
-  const { data, loading, error } = useSelector((state: RootState) => state.insights);
+  const { data, loading, error } = useSelector(
+    (state: RootState) => state.insights
+  );
 
   const [selectedDepts, setSelectedDepts] = useState<string[]>([]);
 
@@ -71,8 +71,12 @@ const Departments: React.FC = () => {
   const chartData = allSkills.map((skill) => {
     const entry: { skill: string; [dept: string]: number | string } = { skill };
     selectedDepts.forEach((dept) => {
-      const deptSessions = sessions.filter((s: Session) => s.department === dept);
-      const scores = deptSessions.map((s: Session) => s.skills[skill]).filter((v) => typeof v === "number");
+      const deptSessions = sessions.filter(
+        (s: Session) => s.department === dept
+      );
+      const scores = deptSessions
+        .map((s: Session) => s.skills[skill])
+        .filter((v) => typeof v === "number");
       entry[dept] = scores.length
         ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
         : "";
@@ -103,7 +107,10 @@ const Departments: React.FC = () => {
       {selectedDepts.length === 0 ? (
         <NoData message="Select one or more departments to view skills comparison." />
       ) : (
-        <DepartmentSkillsBarChart chartData={chartData} selectedDepts={selectedDepts} />
+        <DepartmentSkillsBarChart
+          chartData={chartData}
+          selectedDepts={selectedDepts}
+        />
       )}
     </Container>
   );

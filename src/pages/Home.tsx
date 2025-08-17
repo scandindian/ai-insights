@@ -14,39 +14,49 @@ import NoData from "../components/NoData";
 import { getLLMInsights } from "../utils/llmInsights";
 
 const SummaryGrid = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 0.8fr 2.5fr 4fr;
   gap: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 2rem;
+  align-items: flex-start;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 `;
 
 const TilesColumn = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
 `;
 
 const TopSkillsColumn = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 550px;
-  max-width: 550px;
-  width: 220px;
-  align-items: flex-start;
-  justify-content: flex-start;
-`;
 
-const SkillCard = styled.div`
-  width: 100%;
-  margin-bottom: 1rem;
+  @media (max-width: 768px) {
+    min-width: unset;
+    width: 100%;
+  }
 `;
 
 const SummaryTile = styled.div`
   background: #e3f2fd;
-  border-radius: 10px;
-  flex: 1;
-  min-width: 300px;
-  min-height: 100px;
+  border-radius: 4px;
+  min-height: 200px;
   text-align: left;
   color: #1565c0;
   font-weight: 600;
@@ -57,11 +67,23 @@ const SummaryTile = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   padding: 2rem;
+
+  @media (max-width: 768px) {
+    min-height: 150px;
+    font-size: 1.1rem;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    padding: 1rem;
+    min-height: 120px;
+  }
 `;
 
 const SquareTile = styled.div`
   background: #e3f2fd;
-  border-radius: 10px;
+  border-radius: 4px;
   width: 180px;
   height: 180px;
   min-width: 180px;
@@ -76,10 +98,32 @@ const SquareTile = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 140px;
+    height: 140px;
+    min-width: 140px;
+    min-height: 140px;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 480px) {
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+    min-height: 120px;
+    font-size: 1rem;
+  }
 `;
 
 const TrendSection = styled.div`
   margin-bottom: 2.5rem;
+  padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+  }
 `;
 
 const Home: React.FC = () => {
@@ -263,19 +307,20 @@ const Home: React.FC = () => {
               <TopSkillsColumn>
                 <h3 style={{ margin: 0, color: "#1565c0" }}>Top Skills</h3>
                 {topSkills.map((skill, idx) => (
-                  <SkillCard key={skill.skill}>
-                    <Card
-                      rank={idx + 1}
-                      title={capitalizeWords(skill.skill)}
-                      subtitle={`Avg Score: ${skill.avgScore.toFixed(2)}`}
-                    />
-                  </SkillCard>
+                  <Card
+                    key={skill.skill}
+                    rank={idx + 1}
+                    title={capitalizeWords(skill.skill)}
+                    subtitle={`Avg Score: ${skill.avgScore.toFixed(2)}`}
+                  />
                 ))}
               </TopSkillsColumn>
               <SummaryTile>
                 <div style={{ marginBottom: "0.5rem" }}>Summary</div>
                 <div style={{ fontSize: "1rem", color: "#222" }}>
-                  {llmLoading ? "Generating summary..." : llmSummary || "No summary available."}
+                  {llmLoading
+                    ? "Generating summary..."
+                    : llmSummary || "No summary available."}
                 </div>
               </SummaryTile>
             </SummaryGrid>

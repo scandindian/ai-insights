@@ -18,7 +18,7 @@ const Label = styled.label`
 
 const Select = styled.select`
   padding: 0.4rem 1.2rem 0.4rem 0.5rem;
-  border-radius: 6px;
+  border-radius: 4px;
   border: 1px solid #1976d2;
   background: #e3f2fd;
   color: #1565c0;

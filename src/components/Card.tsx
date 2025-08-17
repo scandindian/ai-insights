@@ -4,7 +4,7 @@ import { MdExpandMore, MdExpandLess } from "react-icons/md";
 
 const CardContainer = styled.div`
   background: #fff;
-  border-radius: 12px;
+  border-radius: 4px;
   box-shadow: 0 2px 8px rgba(60, 64, 67, 0.15);
   padding: 1rem 1.5rem;
   margin: 0.75rem 0;
@@ -59,6 +59,7 @@ const CardDetails = styled.div`
 `;
 
 type CardProps = {
+  key: string;
   title: string;
   subtitle: string;
   rank: number;
