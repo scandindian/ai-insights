@@ -79,10 +79,14 @@ const Home: React.FC = () => {
 
   // Fetch insights when filter changes
   useEffect(() => {
-    if (startDate && endDate) {
+    // Only fetch if departments are loaded and not loading
+    if (departments.length > 0 && startDate && endDate) {
       dispatch(fetchInsights({ department: selectedDept, startDate, endDate }));
+    } else if (departments.length > 0 && (!startDate || !endDate)) {
+      // If no date filter, fetch all data
+      dispatch(fetchInsights({ department: selectedDept }));
     }
-  }, [dispatch, selectedDept, startDate, endDate]);
+  }, [dispatch, departments, selectedDept, startDate, endDate]);
 
   if (loading) {
     return (
