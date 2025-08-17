@@ -90,7 +90,7 @@ AI Insights Dashboard provides data visualization and analytics for customer ser
 
    ```bash
    cd server
-   npm start
+   npm run dev
    # Server running on http://localhost:3001
    ```
 
