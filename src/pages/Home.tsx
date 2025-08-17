@@ -11,15 +11,55 @@ import TrendFilterBar from "../components/TrendFilterBar";
 import type { Session } from "../types/insights";
 import Loader from "../components/Loader";
 import NoData from "../components/NoData";
+import { getLLMInsights } from "../utils/llmInsights";
 
 const SummaryGrid = styled.div`
   display: flex;
+  flex-direction: row;
   gap: 2rem;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
 `;
 
-const Tile = styled.div`
+const TilesColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
+
+const TopSkillsColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 550px;
+  max-width: 550px;
+  width: 220px;
+  align-items: flex-start;
+  justify-content: flex-start;
+`;
+
+const SkillCard = styled.div`
+  width: 100%;
+  margin-bottom: 1rem;
+`;
+
+const SummaryTile = styled.div`
+  background: #e3f2fd;
+  border-radius: 10px;
+  flex: 1;
+  min-width: 300px;
+  min-height: 100px;
+  text-align: left;
+  color: #1565c0;
+  font-weight: 600;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 8px rgba(60, 64, 67, 0.07);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 2rem;
+`;
+
+const SquareTile = styled.div`
   background: #e3f2fd;
   border-radius: 10px;
   width: 180px;
@@ -54,13 +94,23 @@ const Home: React.FC = () => {
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
 
+  // State for LLM summary
+  const [llmSummary, setLlmSummary] = useState<string>("");
+  const [llmLoading, setLlmLoading] = useState(false);
+
+  // Debounce timer ref
+  const debounceRef = React.useRef<NodeJS.Timeout | null>(null);
+
   // Load departments once
   useEffect(() => {
     dispatch(fetchDepartments());
   }, [dispatch]);
 
   // Get all unique dates in filtered sessions
-  const filteredSessions: Session[] = data?.sessions ?? [];
+  const filteredSessions: Session[] = React.useMemo(
+    () => data?.sessions ?? [],
+    [data?.sessions]
+  );
   const allDates: string[] = Array.from(
     new Set(filteredSessions.map((session: Session) => session.date))
   ).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
@@ -87,6 +137,33 @@ const Home: React.FC = () => {
       dispatch(fetchInsights({ department: selectedDept }));
     }
   }, [dispatch, departments, selectedDept, startDate, endDate]);
+
+  useEffect(() => {
+    // Only run if not loading and there are sessions
+    if (!loading && filteredSessions.length > 0) {
+      // Clear previous debounce
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+
+      setLlmLoading(true);
+      debounceRef.current = setTimeout(async () => {
+        try {
+          const insights = await getLLMInsights(filteredSessions);
+          setLlmSummary(insights[0]);
+        } catch {
+          setLlmSummary("LLM summarization failed.");
+        } finally {
+          setLlmLoading(false);
+        }
+      }, 1500); // 1.5 seconds debounce
+    } else {
+      setLlmSummary("");
+      setLlmLoading(false);
+    }
+    // Cleanup on unmount
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [filteredSessions, loading]);
 
   if (loading) {
     return (
@@ -169,31 +246,38 @@ const Home: React.FC = () => {
               departments={chartDepartments}
             />
             <SummaryGrid>
-              <Tile>
-                <div>Total Sessions</div>
-                <div style={{ fontSize: "2rem", fontWeight: 700 }}>
-                  {data?.stats.totalSessions}
-                </div>
-              </Tile>
-              <Tile>
-                <div>Pass Rate</div>
-                <div style={{ fontSize: "2rem", fontWeight: 700 }}>
-                  {data?.stats.passRate.toFixed(2)}%
-                </div>
-              </Tile>
-              <div
-                style={{ flex: 1, display: "flex", flexDirection: "column" }}
-              >
+              <TilesColumn>
+                <SquareTile>
+                  <div>Total Sessions</div>
+                  <div style={{ fontSize: "2rem", fontWeight: 700 }}>
+                    {data?.stats.totalSessions}
+                  </div>
+                </SquareTile>
+                <SquareTile>
+                  <div>Pass Rate</div>
+                  <div style={{ fontSize: "2rem", fontWeight: 700 }}>
+                    {data?.stats.passRate.toFixed(2)}%
+                  </div>
+                </SquareTile>
+              </TilesColumn>
+              <TopSkillsColumn>
                 <h3 style={{ margin: 0, color: "#1565c0" }}>Top Skills</h3>
                 {topSkills.map((skill, idx) => (
-                  <Card
-                    key={skill.skill}
-                    rank={idx + 1}
-                    title={capitalizeWords(skill.skill)}
-                    subtitle={`Avg Score: ${skill.avgScore.toFixed(2)}`}
-                  />
+                  <SkillCard key={skill.skill}>
+                    <Card
+                      rank={idx + 1}
+                      title={capitalizeWords(skill.skill)}
+                      subtitle={`Avg Score: ${skill.avgScore.toFixed(2)}`}
+                    />
+                  </SkillCard>
                 ))}
-              </div>
+              </TopSkillsColumn>
+              <SummaryTile>
+                <div style={{ marginBottom: "0.5rem" }}>Summary</div>
+                <div style={{ fontSize: "1rem", color: "#222" }}>
+                  {llmLoading ? "Generating summary..." : llmSummary || "No summary available."}
+                </div>
+              </SummaryTile>
             </SummaryGrid>
           </>
         ) : (
