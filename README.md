@@ -151,4 +151,4 @@ Backend is hosted with [https://render.com/](https://render.com/)
 - **State Management**: Redux Toolkit
 - **Charts**: Custom SVG/Canvas components
 - **Build Tool**: Vite
-- **Deployment**: Netlify
+- **Deployment**: Netlify and Render
