@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const FilterBar = styled.div`
@@ -96,7 +96,7 @@ const RangeButtonGroup = styled.div`
 `;
 
 const RangeButton = styled.button.withConfig({
-  shouldForwardProp: (prop) => prop !== 'active',
+  shouldForwardProp: (prop) => prop !== "active",
 })<{ active?: boolean }>`
   padding: 0.4rem 1rem;
   border-radius: 2px;
@@ -205,7 +205,7 @@ const TrendFilterBar: React.FC<TrendFilterBarProps> = ({
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (latestDate && (!startDate || !endDate)) {
       setStartDate(getDateNDaysBefore(latestDate, 6));
       setEndDate(latestDate);
@@ -247,7 +247,11 @@ const TrendFilterBar: React.FC<TrendFilterBarProps> = ({
               onChange={(e) => setEndDate(e.target.value)}
             />
             <RangeButtonGroup>
-              <RangeButton active={!!isWeek} type="button" onClick={handleSetWeek}>
+              <RangeButton
+                active={!!isWeek}
+                type="button"
+                onClick={handleSetWeek}
+              >
                 1 Week
               </RangeButton>
               <RangeButton

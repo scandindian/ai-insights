@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchInsights } from "../store/insightsSlice";
 import { fetchDepartments } from "../store/departmentsSlice";
@@ -143,7 +143,7 @@ const Home: React.FC = () => {
   const [llmLoading, setLlmLoading] = useState(false);
 
   // Debounce timer ref
-  const debounceRef = React.useRef<NodeJS.Timeout | null>(null);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load departments once
   useEffect(() => {
@@ -151,7 +151,7 @@ const Home: React.FC = () => {
   }, [dispatch]);
 
   // Get all unique dates in filtered sessions
-  const filteredSessions: Session[] = React.useMemo(
+  const filteredSessions: Session[] = useMemo(
     () => data?.sessions ?? [],
     [data?.sessions]
   );

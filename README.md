@@ -106,7 +106,7 @@ AI Insights Dashboard provides data visualization and analytics for customer ser
 
 **Styling**: Implemented styled-components for component-scoped CSS and responsive design. Chose a clean, professional blue color palette (#1976d2) for consistency across the dashboard.
 
-**Data Visualization**: Created custom chart components (PerformanceTrendChart, UserSkillsBarChart, DepartmentSkillsBarChart) using `Recharts` for optimal performance and customization rather than heavy third-party libraries.
+**Data Visualization**: Created custom chart components (PerformanceTrendChart and DepartmentSkillsBarChart) using `Recharts` for optimal performance and customization rather than heavy third-party libraries.
 
 **Performance**: Utilized `useMemo` and `useCallback` hooks to optimize re-renders. Implemented debounced API calls for AI insights to prevent excessive requests.
 
