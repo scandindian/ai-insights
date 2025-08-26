@@ -108,7 +108,7 @@ AI Insights Dashboard provides data visualization and analytics for customer ser
 
 **Data Visualization**: Created custom chart components (PerformanceTrendChart and DepartmentSkillsBarChart) using `Recharts` for optimal performance and customization rather than heavy third-party libraries.
 
-**Performance**: Utilized `useMemo` hooks to optimize re-renders. Implemented debounced API calls for AI insights to prevent excessive requests.
+**Performance**: Utilized `useMemo` hook to optimize re-renders. Implemented debounced API calls for AI insights to prevent excessive requests.
 
 **Mobile Responsiveness**: Designed mobile-first with CSS Grid and Flexbox, ensuring usability across devices. Components stack vertically on smaller screens while maintaining functionality.
 
